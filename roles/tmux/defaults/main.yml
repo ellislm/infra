@@ -1,0 +1,15 @@
+tmux_version: 3.2
+tmux_repo: https://github.com/tmux/tmux.git
+tmux_from_src: False
+tmux_prefix: /usr/local
+tmux_dot_conf: tmux.conf
+
+# Host-specific lines to be placed in the `tmux.conf` file
+tmux_conf_extra: 
+
+# Extra block to be placed in the `shell_rc` file
+tmux_rc_extra: |
+  if [ "${SSH_CONNECTION}" ] && [ -z "${TMUX}" ]
+  then
+    tmux new-session -A -s remote
+  fi

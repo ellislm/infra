@@ -1,0 +1,10 @@
+- hosts: puget
+  become: false
+  remote_user: "{{ user_name }}"
+  roles:
+    - ksh
+    - tmux
+    - vim
+    - fzf
+    - shelpers
+    - docker

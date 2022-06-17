@@ -1,0 +1,9 @@
+- name: create local symlink
+  file:
+    src: "{{ home_dir }}/local"
+    dest: "{{ home_dir }}/.local"
+    state: link
+    mode: 0700
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+  listen: new home dirs

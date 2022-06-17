@@ -1,0 +1,16 @@
+- name: copy kshrc configs
+  template:
+    src: "{{ ksh_rc }}"
+    dest: "{{ home_dir }}/.kshrc"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+
+- name: add ENV var
+  blockinfile:
+    path: "{{ home_dir }}/.profile"
+    marker: "# {mark} Ansible Managed KSH"
+    block: |
+      if [ $(echo ${SHELL} |  grep -e "ksh$") ]
+      then
+        export ENV="${HOME}/.kshrc"
+      fi

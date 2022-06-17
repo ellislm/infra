@@ -1,0 +1,15 @@
+- name: install mac packages
+  become: true
+  macports:
+    name: "{{ packages }}"
+  when: ansible_facts['os_family'] == "Darwin"
+  register: new_pkgs
+  notify: new_packages
+
+- name: install *nix packages
+  become: true
+  package:
+    name: "{{ packages }}"
+  when: ansible_facts['os_family'] != "Darwin"
+  register: new_pkgs
+  notify: new_packages

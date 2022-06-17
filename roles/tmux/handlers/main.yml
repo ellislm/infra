@@ -1,0 +1,8 @@
+- name: configure and make tmux
+  shell:
+    chdir: "{{ home_opt }}/tmux"
+    cmd: |
+      ./configure --prefix={{ tmux_prefix }};
+      make;
+      make install
+  listen: tmux_src_updated

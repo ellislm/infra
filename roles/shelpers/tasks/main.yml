@@ -1,0 +1,7 @@
+- name: copy shelpers configs
+  copy:
+    src: "{{ item }}"
+    dest: "{{ home_dir }}/.shelpers/{{ item }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+  with_items: "{{ shelpers_files }}"

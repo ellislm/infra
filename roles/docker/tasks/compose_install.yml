@@ -1,0 +1,30 @@
+- name: install docker compose v2
+  block:
+    - name: Create docker cli dir
+      file:
+        path: "{{ home_dir }}/.docker/cli-plugins"
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_group }}"
+        mode: 0750
+
+    - name: Download Docker ComposeV2
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.2.3/docker-compose-linux-x86_64
+        dest: "{{ home_dir }}/.docker/cli-plugins/docker-compose"
+        checksum: md5:8e1cec6807ab5bfdd0006a5601dc68cc
+
+    - name: chmod Docker ComposeV2
+      file:
+        path: "{{ home_dir }}/.docker/cli-plugins/docker-compose"
+        owner: "{{ user_name }}"
+        group: "{{ user_group }}"
+        mode: 0774
+  when: "docker_compose_v2|bool"
+
+- name: install docker compose from repository
+  include_role:
+    name: install_pkgs
+  vars:
+    packages: docker-compose-plugin
+  when: not "docker_compose_v2|bool"

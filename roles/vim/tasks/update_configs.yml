@@ -1,0 +1,15 @@
+- name: copy vimrc configs
+  copy:
+    src: "{{ vim_rc }}"
+    dest: "{{ home_dir }}/.vimrc"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    mode: 0600
+
+
+- name: add ENV var
+  blockinfile:
+    path: "{{ shell_rc }}"
+    marker: "# {mark} Ansible Managed Vim"
+    state: present
+    block: "{{ vim_shellrc_block }}"

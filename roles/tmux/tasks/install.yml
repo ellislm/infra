@@ -1,0 +1,29 @@
+- name: install tmux from repository
+  include_role:
+    name: install_pkgs
+  vars:
+    packages: tmux
+  when: not "tmux_from_src|bool"
+
+- name: build tmux from src
+  become: false
+  block:
+    - name: install tmux dependencies
+      include_role:
+        name: install_pkgs
+      vars:
+        packages:
+          - autoconf
+          - automake
+          - "{{ 'pkgconfig' if ansible_facts['os_family'] == 'Darwin' else 'pkg-config' }}"
+
+    - name: clone tmux repo
+      git:
+        repo: "{{ tmux_repo }}"
+        dest: "{{ home_opt }}/tmux"
+        version: "{{ tmux_version }}"
+      notify: tmux_src_updated
+  when: "tmux_from_src|bool"
+
+- name: Flush handlers
+  meta: flush_handlers

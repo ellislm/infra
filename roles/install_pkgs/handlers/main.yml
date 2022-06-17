@@ -1,0 +1,4 @@
+- name: pkg install results
+  debug: var=new_pkgs.stdout_lines
+  listen: new_packages
+  when: "verbose|bool"

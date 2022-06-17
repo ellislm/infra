@@ -1,0 +1,13 @@
+- name: Docker install
+  include_tasks: install.yml
+  tags:
+    - docker
+
+- name: Docker rootless install
+  include_tasks: rootless.yml
+  when: "docker_rootless|bool"
+
+- name: Docker Compose Install
+  include_tasks: compose_install.yml
+  tags:
+    - docker

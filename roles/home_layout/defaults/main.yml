@@ -1,0 +1,9 @@
+default_home_dirs:
+  - "devel"
+  - "devel/learning"
+  - "local"
+  - "local/etc"
+  - "local/bin"
+  - "opt"
+  - "tmp"
+  - "var"

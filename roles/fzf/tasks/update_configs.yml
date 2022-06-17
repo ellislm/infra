@@ -1,0 +1,7 @@
+- name: Copy fzf.conf
+  copy:
+    src: "{{ fzf_dot_conf }}"
+    dest: "{{ home_dir }}/.shelpers/{{ fzf_dot_conf }}"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    mode: "0700"

@@ -1,0 +1,15 @@
+- name: Update Debian apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Update macports tree
+  macports:
+    selfupdate: yes
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Update pacman
+  pacman:
+    update_cache: yes
+  when: ansible_facts['os_family'] == "Archlinux"

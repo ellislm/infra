@@ -1,0 +1,66 @@
+# enable color support of ls and also add handy aliases
+alias ls='ls --color=auto -G'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Create a nice colorful shell prompt
+GRAY='\[[1;30m\]'
+RED='\[[1;31m\]'
+WHITE='\[[00m\]'
+GREEN='\[[0;32m\]'
+BLUE='\[[0;36m\]'
+
+SYS_CONF=""
+
+if [ "${SSH_CONNECTION}" ]
+then
+  SYS_CONF="${RED}\h${WHITE}:"
+fi
+
+SYS_CONF=""
+export PS1="${GRAY}[${SYS_CONF}${BLUE}\W${GRAY}]${GREEN} \$ ${WHITE}"
+
+if [ "$(whoami)" = "root" ]
+then
+    export PS1=$(echo -e "${RED}ROOT # ${NC}")
+fi
+
+set -o vi
+
+if [ "$(uname)" = "Darwin" ]
+then
+    export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+  # Exporting macports paths
+    set -A complete_port -- info search notes \
+            variants deps rdeps dependents \
+            rdependents uninstall reclaim \
+            select activate deactivate \
+            setrequested setunrequested \
+            install location contents provides \
+            sync selfupdate outdated upgrade \
+            rev-upgrade clean log logfile echo \
+            list mirror version load unload reload \
+            gohome usage help
+fi
+
+# Set up history for oksh. Mainly so we can use fzf to search it later
+export HISTFILE="${HOME}/.sh_history"
+export HISTSIZE=1000
+
+HELPER_DIR="${HOME}/.shelpers"
+if [ -d "${HELPER_DIR}" ]
+then
+    for f in $(ls "${HELPER_DIR}")
+    do
+        . "${HELPER_DIR}/$f"
+    done
+fi
+
+export PATH="${HOME}/local/bin:${PATH}"
+
+# Have nnn use vi not gui to open files:
+export NNN_TMPFILE=${HOME}/var/nnn/.lastd
+alias nnn='nnn -e -d -E && . $NNN_TMPFILE && rm -rf $NNN_TMPFILE'
+
+{{ksh_rc_extra}}

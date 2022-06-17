@@ -1,0 +1,22 @@
+- name: Copy tmux.conf
+  template:
+    src: "{{ tmux_dot_conf }}.j2"
+    dest: "{{ home_dir }}/.tmux.conf"
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+    mode: "0600"
+  tags:
+    - tmux
+    - tmux_configs
+    - dot_files
+
+- name: Add additional rc arguments
+  blockinfile:
+    marker: "\n# {mark} Ansible Managed Tmux"
+    path: "{{ shell_rc }}"
+    block: "{{ tmux_rc_extra }}"
+  tags:
+    - tmux
+    - tmux_configs
+    - dot_files
+

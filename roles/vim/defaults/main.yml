@@ -1,0 +1,8 @@
+vim_prefix: /usr/local
+vim_rc: vimrc
+
+vim_shellrc_block: |
+  export EDITOR='nvim'
+  export VISUAL='nvim'
+  alias vim=nvim
+

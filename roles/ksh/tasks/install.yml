@@ -1,0 +1,17 @@
+- name: install oksh
+  include_role:
+    name: install_pkgs
+  vars:
+    packages: oksh
+  when: not "ksh_from_src|bool"
+
+- name: clone oksh repo
+  git:
+    repo: "{{ ksh_repo }}"
+    dest: "{{ home_opt }}/oksh"
+    version: "{{ ksh_version }}"
+  when: "ksh_from_src|bool"
+  notify: oksh_src_updated
+
+- name: Flush handlers
+  meta: flush_handlers

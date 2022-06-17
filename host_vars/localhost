@@ -1,0 +1,8 @@
+home_dir: "/Users/{{ user_name }}"
+base_install_prefix: "{{ home_dir }}/local"
+
+tmux_prefix: "{{ base_install_prefix }}"
+ksh_prefix: "{{ base_install_prefix }}"
+vim_prefix: "{{ base_install_prefix }}"
+
+shell_rc: "{{ home_dir }}/.kshrc"

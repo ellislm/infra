@@ -1,0 +1,8 @@
+- hosts: openbox
+  become: true
+  remote_user: "{{ user_name }}"
+  roles:
+    - ksh
+    - tmux
+    - vim
+    - shelpers

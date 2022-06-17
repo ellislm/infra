@@ -1,0 +1,8 @@
+- name: Install fzf
+  include_tasks: install.yml
+
+- name: update fzf configs
+  import_tasks: update_configs.yml
+  tags:
+    - fzf_configs
+    - dot_files

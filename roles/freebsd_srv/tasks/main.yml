@@ -1,0 +1,32 @@
+- name: update sysctl values
+  become: true
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+  with_items: "{{ sysctl_vars }}"
+  tags:
+  - sysctl
+  - system
+
+- name: update sysrc vars
+  become: true
+  community.general.sysrc:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+  with_items: "{{ sysrc_vars }}"
+  tags:
+  - sysrc
+  - etc
+  - system
+
+- name: update periodic jobs
+  become: true
+  copy:
+    src: etc/periodic.conf.local
+    dest: /etc/periodic.conf.local
+    owner: "{{ root_name }}"
+    group: "{{ root_group }}"
+    mode: 0600
+  tags:
+    - etc
+    - system

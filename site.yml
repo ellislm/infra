@@ -1,0 +1,5 @@
+- import_playbook: all.yml
+- import_playbook: macos.yml
+- import_playbook: openbox.yml
+- import_playbook: homelab.yml
+- import_playbook: puget.yml

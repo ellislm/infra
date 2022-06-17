@@ -1,0 +1,14 @@
+- name: update repository
+  become: True
+  import_tasks: update.yml
+  tags:
+    - upgrade
+    - update
+  when: "update_cache|bool"
+
+- name: install packages
+  become: True
+  import_tasks: install.yml
+  tags:
+    - upgrade
+    - update

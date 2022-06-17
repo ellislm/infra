@@ -1,0 +1,7 @@
+ksh_version: oksh-7.1
+ksh_repo: https://github.com/ibara/oksh.git
+ksh_from_src: False
+ksh_prefix: /usr/local
+ksh_rc: kshrc.j2
+
+ksh_rc_extra: 

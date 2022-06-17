@@ -1,0 +1,10 @@
+- name: Install tmux
+  include_tasks: install.yml
+  tags:
+    - tmux
+
+- name: Update configs
+  include_tasks: update_configs.yml
+  tags:
+    - tmux
+    - dot_files

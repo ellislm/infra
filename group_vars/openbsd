@@ -1,0 +1,11 @@
+base_packages:
+- doas
+- neovim
+- tmux
+
+tmux_from_src: False
+
+tmux_conf_extra: |
+    set-option -g status-right '#[fg=red,bg=default]#(hostname -r) '
+    set-window-option -g window-status-current-style fg=red,bold
+

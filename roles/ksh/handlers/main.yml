@@ -1,0 +1,8 @@
+- name: configure and make oksh
+  shell:
+    chdir: "{{ home_opt }}/oksh"
+    cmd: |
+      ./configure --prefix={{ ksh_prefix }};
+      make;
+      make install
+  listen: oksh_src_updated

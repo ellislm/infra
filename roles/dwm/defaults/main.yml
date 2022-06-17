@@ -1,0 +1,3 @@
+dwm:
+- build_from_src: False
+- include_dmenu: True

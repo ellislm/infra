@@ -1,0 +1,116 @@
+""""""""""""""""""""""""
+" A simple, no-frills  "
+"  vim configuration   "
+""""""""""""""""""""""""
+
+" Much of this is based on the excellent talk by Max Cantor:
+" https://youtu.be/XA2WjJbmmoM
+" https://github.com/changemewtf/no_plugins
+
+set nocompatible
+filetype plugin on
+set shell=/opt/local/bin/oksh
+
+
+""""""""""""""""
+" Key Bindings "
+""""""""""""""""
+
+" Easier copy + paste to system clipboard
+map ,y "+y
+map ,p "+p
+map ,P "+P
+map <C-s> :w<Cr>
+map <C-q> :q<CR>
+
+""""""""""""""""""
+" User Interface "
+""""""""""""""""""
+
+" Color column
+set colorcolumn=80
+hi ColorColumn ctermbg=darkgrey guibg=darkgrey
+
+" Enable syntax highlighting
+syntax on
+
+" Show the line and column number of the cursor position
+set ruler
+
+" Disable line wrapping (except for markdown)
+set nowrap
+autocmd FileType markdown set wrap
+
+
+" Adjust tabs and indent
+set shiftwidth=4
+set tabstop=4
+set numberwidth=1
+set expandtab
+set autoindent
+
+" Show line numbers (but not in the terminal mode)
+set number
+autocmd TermOpen * setlocal nonumber norelativenumber
+
+" Reduce time to highlight matching paren, quote, etc
+set matchtime=1
+set showmatch
+
+" Change split directions
+set splitright
+set splitbelow
+
+" Highlight trailing white space
+" Note: place this _before_ loading any color schemes.
+highlight ExtraWhitespace ctermbg=red guibg=red
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+"""""""""""""""""""""
+" Filetype Specific "
+"""""""""""""""""""""
+autocmd FileType c set shiftwidth=2 tabstop=2
+autocmd FileType python set foldmethod=indent
+
+""""""""""""""""""
+" User Functions "
+""""""""""""""""""
+
+" Remove whitespace
+command! StripWhitespace :%s/\s\+$//e
+
+" Command for viewing history of edited files.
+command! Fhistory :browse oldfiles
+
+" Open terminal in vertical split
+command! vterm :vsplit term://oksh
+command! Vterm :split term://oksh
+
+"""""""""""""""""":
+" Code Formatting "
+"""""""""""""""""""
+
+" Format C Files
+command! CFormat :% !clang-format --style=Google -
+
+" Format python code with black
+command! PyFmt :%!black -q -l 80 -
+command! PyDocFmt :%! docformatter --wrap-descriptions 80 --wrap-summaries 80 -
+command! Pylint :vne | r !pylint #
+
+""""""""""""""""
+" Autocomplete "
+""""""""""""""""
+
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+
+" Display all matching files when we tab complete
+set wildmenu
+
+colorscheme onedark
+

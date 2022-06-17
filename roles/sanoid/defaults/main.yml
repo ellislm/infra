@@ -1,0 +1,8 @@
+sanoid_packages:
+- p5-Config-IniFiles 
+- p5-Capture-Tiny 
+- pv 
+- mbuffer 
+- lzop
+- sanoid
+- flock

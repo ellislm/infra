@@ -1,0 +1,69 @@
+set -g mouse
+
+# enable activity alerts
+set -g monitor-activity on
+set -g visual-activity on
+
+# Fix <Esc> lag in vim
+set-option -sg escape-time 10
+
+#
+# Status bar theme
+#
+
+# Set the default terminal mode to 256color mode
+# set -g default-terminal "screen-256color"
+
+# Remove status left
+set -g status-left ''
+set -g status-justify left
+
+# Make the status bar (sort of) pretty
+set -g status-bg colour16
+set -g status-fg colour250
+set -g status-position top
+
+#
+# Key Bindings
+#
+set -g prefix C-a
+
+bind-key h "select-pane -L"
+bind-key j "select-pane -D"
+bind-key k "select-pane -U"
+bind-key l "select-pane -R"
+
+bind c new-window -c "#{pane_current_path}"
+
+# Show visual tree of all open windows
+#bind -n M-w choose-tree -Zw
+
+# Convenience bindings for navigating panes
+bind -n M-Tab next-window
+bind -n M-S-Tab previous-window
+
+bind -n M-0 select-window -t :=0
+bind -n M-1 select-window -t :=1
+bind -n M-2 select-window -t :=2
+bind -n M-3 select-window -t :=3
+bind -n M-4 select-window -t :=4
+bind -n M-5 select-window -t :=5
+bind -n M-6 select-window -t :=6
+
+bind -n M-c new-window -c "#{pane_current_path}"
+bind -n M-V split-window -c "#{pane_current_path}"
+bind -n M-v split-window -h -c "#{pane_current_path}"
+bind -n M-x kill-window
+bind -n M-w kill-pane
+
+bind -n M-H select-pane -L
+bind -n M-J select-pane -D
+bind -n M-K select-pane -U
+bind -n M-L select-pane -R
+
+bind-key -r -T prefix       M-Up              resize-pane -U 5
+bind-key -r -T prefix       M-Down            resize-pane -D 5
+bind-key -r -T prefix       M-Left            resize-pane -L 5
+bind-key -r -T prefix       M-Right           resize-pane -R 5
+
+{{ tmux_conf_extra }}

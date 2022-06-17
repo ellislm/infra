@@ -1,0 +1,50 @@
+---
+sysrc_vars:
+- name: pf_enable
+  value: YES
+- name: pflog_enable
+  value: NO
+- name: gateway_enable
+  value: YES
+- name: routed_enable
+  value: NO
+- name: linux_enable
+  value: YES
+- name: jail_enable
+  value: YES
+- name: smartd_enable
+  value: YES
+- name: syslogd_flags
+  value: "-ss"
+- name: sshd_enable
+  value: "YES"
+- name: moused_enable
+  value: "YES"
+
+sysctl_vars:
+# Allow non-root to use usb devs, for zwave usb passthrough
+- name: vfs.usermount
+  value: YES
+- name: net.link.bridge.pfil_onlyip      
+  value: YES
+# We only want to filter on the bridge itself
+- name: net.link.bridge.pfil_member      
+  value: NO
+- name: net.link.bridge.pfil_bridge      
+  value: YES
+- name: net.link.bridge.pfil_local_phys  
+  value: NO
+- name: net.link.bridge.ipfw             
+  value: NO
+- name: kern.elf64.allow_wx
+  value: 0
+- name: kern.elf64.aslr.pie_enable
+  value: 1
+- name: kern.elf64.aslr.enable
+  value: 1
+- name: kern.elf32.allow_wx
+  value: 0
+- name: kern.elf32.aslr.pie_enable
+  value: 1
+- name: kern.el32.aslr.enable
+  value: 1

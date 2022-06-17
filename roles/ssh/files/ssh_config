@@ -1,0 +1,9 @@
+Include /etc/ssh/ssh_config.d/*.conf
+
+Host *
+    PasswordAuthentication no
+    Port 22
+    VisualHostKey yes
+    SendEnv LANG LC_*
+    HashKnownHosts yes
+    GSSAPIAuthentication yes

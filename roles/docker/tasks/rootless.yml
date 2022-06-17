@@ -1,0 +1,50 @@
+- name: install docker rootless
+  become: false
+  remote_user: "{{ user_name }}"
+  shell:
+    cmd: "/usr/bin/dockerd-rootless-setuptool.sh install"
+    creates: "{{ home_dir }}/.config/systemd/user/docker.service"
+
+- name: switch to rootless docker services
+  block:
+    - name: Disable system docker service
+      become: true
+      systemd:
+        state: stopped
+        enabled: no
+        name: docker.service
+
+    - name: Disable system docker socket
+      become: true
+      systemd:
+        state: stopped
+        enabled: no
+        name: docker.socket
+
+    - name: Enable and start user docker service
+      become: false
+      systemd:
+        state: started
+        enabled: yes
+        scope: user
+        name: docker.service
+
+- name: enable rootless docker on startup
+  become: true
+  block:
+    - name: Check if user lingers
+      stat: path=/var/lib/systemd/linger/{{ user_name }}
+      register: linger
+
+    - name: Enable linger
+      command: loginctl enable-linger {{ user_name }}
+      when: not linger.stat.exists
+
+- name: Export rootless docker ENVs
+  become: false
+  remote_user: "{{ user_name }}"
+  lineinfile:
+    path: "{{ home_dir }}/.profile"
+    state: present
+    line: "export DOCKER_HOST=unix:///run/user/1000/docker.sock"
+    regexp: "^export DOCKER_HOST.*"

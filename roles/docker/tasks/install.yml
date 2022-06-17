@@ -1,0 +1,71 @@
+- name: Docker Install Arch
+  block:
+    - name: install docker packages
+      become: true
+      pacman:
+        name:
+          - docker
+          - python-pip
+          - python-requests
+          - python-virtualenv
+        update_cache: yes
+
+    # System docker-py packages conflict with pip,
+    # but pip is required for ansible
+    - name: Ensure system docker-pythons are not present
+      become: true
+      package:
+        name:
+          - python-docker
+          - docker-compose
+        state: absent
+  when: ansible_facts['os_family'] == "Archlinux"
+
+- name: Docker Install Debian
+  block:
+    - name: Add Docker GPG apt Key
+      become: true
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Add Docker Repository
+      become: true
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: install docker from apt
+      include_role:
+        name: install_pkgs
+      vars:
+        packages:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        update_cache: yes
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Enable and start system docker service
+  become: true
+  systemd:
+    state: started
+    enabled: yes
+    name: docker.service
+  when: not docker_rootless|bool
+
+- name: Enable and start system docker socket
+  become: true
+  systemd:
+    state: started
+    enabled: yes
+    name: docker.socket
+  when: not docker_rootless|bool
+
+- name: Add user to the docker group
+  become: true
+  user:
+    name: "{{ user_name }}"
+    groups: "docker"
+    append: yes

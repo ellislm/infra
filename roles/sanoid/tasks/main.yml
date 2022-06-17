@@ -1,0 +1,32 @@
+- name: install sanoid
+  include_role:
+    name: install_pkgs
+  vars:
+    packages: "{{ sanoid_packages }}"
+  tags:
+    - packages
+    - sanoid
+
+- name: Update crontab
+  become: true
+  blockinfile:
+    path: /etc/crontab
+    block: |
+      */15 * * * * root lockf -st0 /var/run/sanoid/cron-take.lock sanoid --take-snapshots
+      */15 * * * * root lockf -st0 /var/run/sanoid/cron-prune.lock sanoid --prune-snapshots
+  tags:
+  - dot_files
+  - cron
+  - sanoid
+
+- name: update sanoid configs
+  become: true
+  copy:
+    src:  "usr/local/etc/sanoid/sanoid.conf"
+    dest: "/usr/local/etc/sanoid/sanoid.conf"
+    owner: root
+    group: "{{ root_group | default('wheel') }}"
+    mode: '0644'
+  tags:
+    - etc
+    - sanoid

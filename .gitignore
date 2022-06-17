@@ -1,0 +1,11 @@
+hosts
+
+roles/freebsd_jails*
+roles/freebsd_bhyve*
+
+*bak*
+*cache*
+*tmp*
+*vscode*
+*.DS_Store*
+*.pub

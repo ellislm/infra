@@ -1,0 +1,39 @@
+base_packages:
+  - fzf
+  - git
+  - kakoune
+  - neovim
+  - nnn
+  - oksh
+  - py310-ansible
+  - py310-ipython
+  - py310-neovim
+  - ripgrep
+  - rsync
+  - tig
+  - tmux
+  - tmux-pasteboard
+  - universal-ctags
+
+home_dir: "/Users/{{ user_name }}"
+base_install_prefix: "{{ home_dir }}/local"
+
+tmux_prefix: "{{ base_install_prefix }}"
+ksh_prefix: "{{ base_install_prefix }}"
+vim_prefix: "{{ base_install_prefix }}"
+
+shell_rc: "{{ home_dir }}/.kshrc"
+  
+tmux_conf_extra: |
+    set-option -g status-right '#[fg=blue,dim,bg=default]#(hostname) '
+    set-window-option -g window-status-current-style fg=blue,bold
+
+ksh_rc_extra: |
+    if [ "$(command -v ansible)" ]
+    then
+      export ANSIBLE_CONFIG="${HOME}/opt/infra/ansible.cfg"
+      alias ans="ansible-playbook -D -K $(dirname ${ANSIBLE_CONFIG})/site.yml"
+      alias ansup="ansible-playbook -D -K $(dirname ${ANSIBLE_CONFIG})/site.yml -l macos --skip-tags common"
+    fi
+    alias libctag='uctags -R --c++-kinds=+p --fields=+iaS --extras=+f --extras=+q \
+        /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include'

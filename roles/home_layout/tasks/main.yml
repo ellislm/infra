@@ -1,0 +1,10 @@
+- name: Layout home dirs
+  file:
+    path: "{{ home_dir }}/{{ item }}"
+    state: directory
+    mode: 0700
+    owner: "{{ user_name }}"
+    group: "{{ user_group }}"
+  with_items: "{{ default_home_dirs }}"
+  when: "{{ default_home_dirs }}"
+  notify: new home dirs

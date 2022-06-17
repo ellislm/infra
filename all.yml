@@ -1,0 +1,10 @@
+- hosts: all
+  become: false
+  remote_user: "{{ user_name }}"
+  roles:
+    - role: home_layout
+    - role: install_pkgs
+      vars:
+        packages: "{{ base_packages }}"
+      tags: base_packages
+  tags: common

@@ -1,0 +1,11 @@
+- name: install vim
+  import_tasks: install.yml
+  tags:
+    - vim
+
+- name: update vim configs
+  import_tasks: update_configs.yml
+  tags:
+    - vim
+    - vim_configs
+    - dot_files

@@ -1,0 +1,11 @@
+- hosts: homelab
+  become: true
+  remote_user: "{{ user_name }}"
+  roles:
+    - freebsd_srv
+    - ksh
+    - sanoid
+    - freebsd_jails
+    - freebsd_bhyve
+    - tmux
+    - vim

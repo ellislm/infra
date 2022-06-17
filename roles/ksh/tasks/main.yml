@@ -1,0 +1,11 @@
+- name: install oksh
+  import_tasks: install.yml
+  tags:
+    - ksh
+
+- name: update oksh configs
+  import_tasks: update_configs.yml
+  tags:
+    - ksh
+    - oksh_configs
+    - dot_files

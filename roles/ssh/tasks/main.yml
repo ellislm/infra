@@ -1,0 +1,20 @@
+- name: Add SSH public keys for hosts
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: '{{ item }}'
+  with_fileglob: files/*.pub
+  remote_user: "{{ user }}"
+  no_log: true
+
+- name: Disable password authentication for ssh
+  become: true
+  blockinfile:
+    path: /etc/ssh/ssh_config
+    block: |
+      PasswordAuthentication no
+      Port {{ ssh_port | default('22') }}
+      VisualHostKey yes
+      SendEnv LANG LC_*
+      HashKnownHosts yes
+      GSSAPIAuthentication yes
