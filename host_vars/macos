@@ -14,6 +14,9 @@ base_packages:
   - tmux
   - tmux-pasteboard
   - universal-ctags
+  - libtool
+  - libfido2
+  - asciidoc
 
 home_dir: "/Users/{{ user_name }}"
 base_install_prefix: "{{ home_dir }}/local"
@@ -32,8 +35,8 @@ ksh_rc_extra: |
     if [ "$(command -v ansible)" ]
     then
       export ANSIBLE_CONFIG="${HOME}/opt/infra/ansible.cfg"
-      alias ans="ansible-playbook -D -K $(dirname ${ANSIBLE_CONFIG})/site.yml"
-      alias ansup="ansible-playbook -D -K $(dirname ${ANSIBLE_CONFIG})/site.yml -l macos --skip-tags common"
+      alias ans="ansible-playbook -D -e "@$(dirname ${ANSIBLE_CONFIG})/vaulted_vars.yml" $(dirname ${ANSIBLE_CONFIG})/site.yml"
+      alias ansup="ansible-playbook -D -e "@$(dirname ${ANSIBLE_CONFIG})/vaulted_vars.yml" $(dirname ${ANSIBLE_CONFIG})/site.yml -l macos --skip-tags common"
     fi
     alias libctag='uctags -R --c++-kinds=+p --fields=+iaS --extras=+f --extras=+q \
-        /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include'
+        /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include ./'
