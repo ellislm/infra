@@ -69,6 +69,8 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+colorscheme onedark
+
 """""""""""""""""""""
 " Filetype Specific "
 """""""""""""""""""""
@@ -86,8 +88,8 @@ command! StripWhitespace :%s/\s\+$//e
 command! Fhistory :browse oldfiles
 
 " Open terminal in vertical split
-command! vterm :vsplit term://oksh
-command! Vterm :split term://oksh
+command! Vterm :vsplit term://oksh
+command! Hterm :split term://oksh
 
 """""""""""""""""":
 " Code Formatting "
@@ -112,5 +114,9 @@ set path+=**
 " Display all matching files when we tab complete
 set wildmenu
 
-colorscheme onedark
-
+"""""""""""""""""""
+" File Management "
+"""""""""""""""""""
+set nobackup       "no backup files
+set nowritebackup  "only in case you don't want a backup file while editing
+set noswapfile     "no swap files

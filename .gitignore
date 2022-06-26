@@ -9,3 +9,4 @@ roles/freebsd_bhyve*
 *vscode*
 *.DS_Store*
 *.pub
+*vault*

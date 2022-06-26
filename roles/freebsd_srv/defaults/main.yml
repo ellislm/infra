@@ -17,9 +17,11 @@ sysrc_vars:
 - name: syslogd_flags
   value: "-ss"
 - name: sshd_enable
-  value: "YES"
+  value: YES
 - name: moused_enable
-  value: "YES"
+  value: YES
+- name: auditd_enable
+  value: YES
 
 sysctl_vars:
 # Allow non-root to use usb devs, for zwave usb passthrough
